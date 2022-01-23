@@ -1,0 +1,6 @@
+[Path]
+Unit=camilladsp-watcher.service
+PathChanged=/home/dkdsp/camilladsp-setup
+
+[Install]
+WantedBy=multi-user.target

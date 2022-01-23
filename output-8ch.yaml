@@ -26,42 +26,42 @@ mixers:
       - dest: 0
         sources:
           - channel: 0
-            gain: -12
+            gain: -6
             inverted: false
       - dest: 1
         sources:
           - channel: 1
-            gain: -12
+            gain: -6
             inverted: false
       - dest: 2
         sources:
           - channel: 0
-            gain: -12
+            gain: -6
             inverted: false
       - dest: 3
         sources:
           - channel: 1
-            gain: -12
+            gain: -6
             inverted: false
       - dest: 4
         sources:
           - channel: 0
-            gain: -12
+            gain: -6
             inverted: false
       - dest: 5
         sources:
           - channel: 1
-            gain: -12
+            gain: -6
             inverted: false
       - dest: 6
         sources:
           - channel: 0
-            gain: -12
+            gain: -6
             inverted: false
       - dest: 7
         sources:
           - channel: 1
-            gain: -12
+            gain: -6
             inverted: false
 
 filters:

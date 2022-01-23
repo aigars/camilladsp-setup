@@ -1,0 +1,12 @@
+[Unit]
+Description=camilladsp restarter
+After=camilladsp.target
+StartLimitIntervalSec=10
+StartLimitBurst=10
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/systemctl restart camilladsp.service
+
+[Install]
+WantedBy=multi-user.target

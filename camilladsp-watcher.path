@@ -1,5 +1,6 @@
 [Path]
 Unit=camilladsp-watcher.service
+TriggerLimitBurst=0
 PathChanged=/home/dkdsp/camilladsp-setup
 
 [Install]

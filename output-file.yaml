@@ -1,0 +1,233 @@
+---
+devices:
+  samplerate: 48000
+  chunksize: 2048
+  target_level: 2048
+  adjust_period: 3
+  enable_rate_adjust: true
+  enable_resampling: true
+  resampler_type:  BalancedAsync
+  capture_samplerate: 44100
+  capture:
+    type: File
+    channels: 2
+    filename: "/home/dkdsp/camilladsp-setup/audio"
+    format: S16LE
+  playback:
+    type: Alsa
+    channels: 16
+    device: "output_card1"
+    format: S32LE
+     
+mixers:
+  2to8:
+    channels:
+      in: 2
+      out: 16
+    mapping:
+      - dest: 0
+        mute: false
+        sources:
+          - channel: 0
+            gain: -9
+            inverted: false
+      - dest: 1
+        mute: false
+        sources:
+          - channel: 0
+            gain: -7
+            inverted: false
+      - dest: 2
+        mute: false
+        sources:
+          - channel: 0
+            gain: -10
+            inverted: false
+      - dest: 3
+        mute: false
+        sources:
+          - channel: 0
+            gain: -11
+            inverted: false
+
+      - dest: 4
+        mute: false
+        sources:
+          - channel: 1
+            gain: -9
+            inverted: false
+      - dest: 5
+        mute: false
+        sources:
+          - channel: 1
+            gain: -7
+            inverted: false
+      - dest: 6
+        mute: false
+        sources:
+          - channel: 1
+            gain: -10
+            inverted: false
+      - dest: 7
+        mute: false
+        sources:
+          - channel: 1
+            gain: -11
+            inverted: false
+
+pipeline:
+  - type: Mixer
+    name: 2to8
+  - type: Filter
+    channel: 0 #left bass
+    names:
+      - lowpass_bass
+      - delay_bass
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 1 #left midbass
+    names:
+      - fir_midbass
+      - delay_midbass
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 2 #left mids
+    names:
+      - fir_mid
+      - delay_mid
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 3 #left highs
+    names:
+      - fir_high
+      # - eq_high1
+      # - eq_high2
+      # - eq_high3
+      # - eq_high4
+      - delay_high
+      - volumegain
+      - volume
+
+  - type: Filter
+    channel: 4 #right bass
+    names:
+      - lowpass_bass
+      - delay_bass
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 5 #right midbass
+    names:
+      - fir_midbass
+      - delay_midbass
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 6 #right mids
+    names:
+      - fir_mid
+      - delay_mid
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 7 #right highs
+    names:
+      - fir_high
+      # - eq_high1
+      # - eq_high2
+      # - eq_high3
+      # - eq_high4
+      - delay_high
+      - volumegain
+      - volume
+
+filters:
+  volumegain:
+    type: Gain
+    parameters:
+      gain: -16.0
+      inverted: false
+      mute: false
+  volume:
+    type: Volume
+    parameters:
+      ramp_time: 200
+  lowpass_bass:
+    type: BiquadCombo
+    parameters:
+      type: LinkwitzRileyLowpass
+      freq: 50
+      order: 8
+  eq_high1:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 3500
+      q: 4
+      gain: -6
+  eq_high2:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 4400
+      q: 8
+      gain: 0
+  eq_high3:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 6500
+      q: 6
+      gain: -9
+  eq_high4:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 10200
+      q: 8
+      gain: -6
+  delay_bass:
+    type: Delay
+    parameters:
+      delay: 153.2
+      unit: ms
+      subsample: false
+  delay_midbass:
+    type: Delay
+    parameters:
+      delay: 1.35
+      unit: ms
+      subsample: false
+  delay_mid:
+    type: Delay
+    parameters:
+      delay: 0.92
+      unit: ms
+      subsample: false
+  delay_high:
+    type: Delay
+    parameters:
+      delay: 0.0
+      unit: ms
+      subsample: false
+  fir_midbass:
+    type: Conv
+    parameters:
+      type: Raw
+      format: TEXT
+      filename: firs/impulse_midbass.txt
+  fir_mid:
+    type: Conv
+    parameters:
+      type: Raw
+      format: TEXT
+      filename: firs/impulse_mid.txt 
+  fir_high:
+    type: Conv
+    parameters:
+      type: Raw
+      format: TEXT
+      filename: firs/impulse_high_eq.txt

@@ -12,7 +12,13 @@ sudo cp asound.conf /etc/
 sudo cp camilladsp.service /etc/systemd/system/  
 sudo cp camilladsp-watcher.service /etc/systemd/system/  
 sudo cp camilladsp-watcher.path /etc/systemd/system/  
+sudo cp camilladsp-remote.service /etc/systemd/system/  
 sudo systemctl daemon-reload  
 sudo systemctl enable camilladsp.service  
 sudo systemctl enable camilladsp-watcher.service  
 sudo systemctl enable camilladsp-watcher.path  
+sudo systemctl enable camilladsp-remote.service  
+
+
+## Get alsa device info
+aplay -D hw:CARD=HDSPMxe053ac --dump-hw-params test.wav

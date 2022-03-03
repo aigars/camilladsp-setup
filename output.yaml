@@ -2,164 +2,78 @@
 devices:
   samplerate: 48000
   chunksize: 1024
-  enable_rate_adjust: false
+  target_level: 1024
+  adjust_period: 3
+  enable_rate_adjust: true
   enable_resampling: false
-  resampler_type: AccurateAsync
+  resampler_type:  BalancedAsync
   capture_samplerate: 48000
   capture:
     type: Alsa
-    channels: 16
-    device: "input_card2"
+    channels: 2
+    device: "input_card1"
     format: S32LE
   playback:
     type: Alsa
-    channels: 16
+    channels: 8
     device: "output_card1"
     format: S32LE
      
 mixers:
   2to8:
     channels:
-      in: 16
-      out: 16
+      in: 2
+      out: 8
     mapping:
       - dest: 0
+        mute: false
         sources:
           - channel: 0
-            gain: -6
+            gain: -9
             inverted: false
       - dest: 1
+        mute: false
         sources:
-          - channel: 1
-            gain: -6
+          - channel: 0
+            gain: -7
             inverted: false
       - dest: 2
+        mute: false
         sources:
           - channel: 0
-            gain: -6
+            gain: -10
             inverted: false
       - dest: 3
-        sources:
-          - channel: 1
-            gain: -6
-            inverted: false
-      - dest: 4
+        mute: false
         sources:
           - channel: 0
-            gain: -6
-            inverted: false
-      - dest: 5
-        sources:
-          - channel: 1
-            gain: -6
-            inverted: false
-      - dest: 6
-        sources:
-          - channel: 0
-            gain: -6
-            inverted: false
-      - dest: 7
-        sources:
-          - channel: 1
-            gain: -6
+            gain: -11
             inverted: false
 
-filters:
-  lowpass1:
-    type: Biquad
-    parameters:
-      type: Lowpass
-      freq: 50
-      q: 0.54
-  lowpass2:
-    type: Biquad
-    parameters:
-      type: Lowpass
-      freq: 50
-      q: 1.31
-  lowpass3:
-    type: Biquad
-    parameters:
-      type: Lowpass
-      freq: 500
-      q: 0.71
-  lowpass4:
-    type: Biquad
-    parameters:
-      type: Lowpass
-      freq: 3000
-      q: 0.71
-  highpass1:
-    type: Biquad
-    parameters:
-      type: Highpass
-      freq: 50
-      q: 0.71
-  highpass2:
-    type: Biquad
-    parameters:
-      type: Highpass
-      freq: 500
-      q: 0.71
-  highpass3:
-    type: Biquad
-    parameters:
-      type: Highpass
-      freq: 3000
-      q: 0.71
-  eqmidb1:
-    type: Biquad
-    parameters:
-      type: Peaking
-      freq: 160
-      bandwidth: 0.25
-      gain: -3
-  eqmidb2:
-    type: Biquad
-    parameters:
-      type: Peaking
-      freq: 235
-      bandwidth: 0.1
-      gain: -6
-  eqmid:
-    type: Biquad
-    parameters:
-      type: Peaking
-      freq: 1800
-      bandwidth: 0.2
-      gain: -6
-  eqhigh1:
-    type: Biquad
-    parameters:
-      type: Peaking
-      freq: 3500
-      bandwidth: 0.1
-      gain: -6
-  eqhigh2:
-    type: Biquad
-    parameters:
-      type: Peaking
-      freq: 6000
-      bandwidth: 0.15
-      gain: -6
-  delaymidbase:
-    type: Delay
-    parameters:
-      delay: 0.33
-      unit: ms
-      subsample: false
-  delaymid:
-    type: Delay
-    parameters:
-      delay: 19.03
-      unit: ms
-      subsample: false
-  delayhigh:
-    type: Delay
-    parameters:
-      delay: 18.74
-      unit: ms
-      subsample: false
+      - dest: 4
+        mute: false
+        sources:
+          - channel: 1
+            gain: -9
+            inverted: false
+      - dest: 5
+        mute: false
+        sources:
+          - channel: 1
+            gain: -7
+            inverted: false
+      - dest: 6
+        mute: false
+        sources:
+          - channel: 1
+            gain: -10
+            inverted: false
+      - dest: 7
+        mute: false
+        sources:
+          - channel: 1
+            gain: -11
+            inverted: false
 
 pipeline:
   - type: Mixer
@@ -167,68 +81,153 @@ pipeline:
   - type: Filter
     channel: 0 #left bass
     names:
-      - lowpass1
-      - lowpass2
-      - lowpass1
-      - lowpass2
+      - lowpass_bass
+      - delay_bass
+      - volumegain
+      - volume
   - type: Filter
-    channel: 1 #right bass
+    channel: 1 #left midbass
     names:
-      - lowpass1
-      - lowpass2
-      - lowpass1
-      - lowpass2
+      - fir_midbass
+      - delay_midbass
+      - volumegain
+      - volume
   - type: Filter
-    channel: 2 #left midbass
+    channel: 2 #left mids
     names:
-      - highpass1
-      - highpass1
-      - lowpass3
-      - lowpass3
-      - eqmidb1
-      - eqmidb2
-      - delaymidbase
+      - fir_mid
+      - delay_mid
+      - volumegain
+      - volume
   - type: Filter
-    channel: 3 #right midbass
+    channel: 3 #left highs
     names:
-      - highpass1
-      - highpass1
-      - lowpass3
-      - lowpass3
-      - eqmidb1
-      - eqmidb2
-      - delaymidbase
+      - fir_high
+      # - eq_high1
+      # - eq_high2
+      # - eq_high3
+      # - eq_high4
+      - delay_high
+      - volumegain
+      - volume
+
   - type: Filter
-    channel: 4 #left mids
+    channel: 4 #right bass
     names:
-      - highpass2
-      - highpass2
-      - lowpass4
-      - lowpass4
-      - eqmid
-      - delaymid
+      - lowpass_bass
+      - delay_bass
+      - volumegain
+      - volume
   - type: Filter
-    channel: 5 #right mids
+    channel: 5 #right midbass
     names:
-      - highpass2
-      - highpass2
-      - lowpass4
-      - lowpass4
-      - eqmid
-      - delaymid
+      - fir_midbass
+      - delay_midbass
+      - volumegain
+      - volume
   - type: Filter
-    channel: 6 #left highs
+    channel: 6 #right mids
     names:
-      - highpass3
-      - highpass3
-      - eqhigh1
-      - eqhigh2
-      - delayhigh
+      - fir_mid
+      - delay_mid
+      - volumegain
+      - volume
   - type: Filter
     channel: 7 #right highs
     names:
-      - highpass3
-      - highpass3
-      - eqhigh1
-      - eqhigh2
-      - delayhigh
+      - fir_high
+      # - eq_high1
+      # - eq_high2
+      # - eq_high3
+      # - eq_high4
+      - delay_high
+      - volumegain
+      - volume
+
+filters:
+  volumegain:
+    type: Gain
+    parameters:
+      gain: -12.0
+      inverted: false
+      mute: false
+  volume:
+    type: Volume
+    parameters:
+      ramp_time: 200
+  lowpass_bass:
+    type: BiquadCombo
+    parameters:
+      type: LinkwitzRileyLowpass
+      freq: 50
+      order: 8
+  eq_high1:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 3500
+      q: 4
+      gain: -6
+  eq_high2:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 4400
+      q: 8
+      gain: 0
+  eq_high3:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 6500
+      q: 6
+      gain: -9
+  eq_high4:
+    type: Biquad
+    parameters:
+      type: Peaking
+      freq: 10200
+      q: 8
+      gain: -6
+  delay_bass:
+    type: Delay
+    parameters:
+      delay: 153.2
+      unit: ms
+      subsample: false
+  delay_midbass:
+    type: Delay
+    parameters:
+      delay: 1.35
+      unit: ms
+      subsample: false
+  delay_mid:
+    type: Delay
+    parameters:
+      delay: 0.92
+      unit: ms
+      subsample: false
+  delay_high:
+    type: Delay
+    parameters:
+      delay: 0.0
+      unit: ms
+      subsample: false
+  fir_midbass:
+    type: Conv
+    parameters:
+      type: Raw
+      format: TEXT
+      filename: firs/impulse_midbass.txt
+  fir_mid:
+    type: Conv
+    parameters:
+      type: Raw
+      format: TEXT
+      filename: firs/impulse_mid.txt 
+  fir_high:
+    type: Conv
+    parameters:
+      type: Raw
+      format: TEXT
+      filename: firs/impulse_high_eq.txt

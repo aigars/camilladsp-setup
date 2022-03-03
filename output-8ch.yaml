@@ -8,68 +8,82 @@ devices:
   capture_samplerate: 48000
   capture:
     type: Alsa
-    channels: 16
+    channels: 8
     device: "input_card2"
     format: S32LE
   playback:
     type: Alsa
-    channels: 16
+    channels: 8
     device: "output_card1"
     format: S32LE
      
 mixers:
   2to8:
     channels:
-      in: 16
-      out: 16
+      in: 8
+      out: 8
     mapping:
       - dest: 0
         sources:
           - channel: 0
-            gain: -6
+            gain: -12
+            mute: false
             inverted: false
       - dest: 1
         sources:
           - channel: 1
-            gain: -6
+            gain: -12
+            mute: false
             inverted: false
       - dest: 2
         sources:
           - channel: 0
-            gain: -6
+            gain: -3
+            mute: false
             inverted: false
       - dest: 3
         sources:
           - channel: 1
-            gain: -6
+            gain: -3
+            mute: false
             inverted: false
       - dest: 4
         sources:
           - channel: 0
-            gain: -6
+            gain: -9
+            mute: false
             inverted: false
       - dest: 5
         sources:
           - channel: 1
-            gain: -6
+            gain: -9
+            mute: false
             inverted: false
       - dest: 6
         sources:
           - channel: 0
-            gain: -6
+            gain: -14
+            mute: false
             inverted: false
       - dest: 7
         sources:
           - channel: 1
-            gain: -6
+            gain: -14
+            mute: false
             inverted: false
 
 filters:
+  volumegain:
+    type: Gain
+    parameters:
+      gain: -7.0
+      inverted: false
+      mute: false
   lowpass1:
     type: Biquad
     parameters:
       type: Lowpass
-      freq: 50
+      freq: 60
       q: 0.54
   lowpass2:
     type: Biquad
@@ -87,7 +101,7 @@ filters:
     type: Biquad
     parameters:
       type: Lowpass
-      freq: 3000
+      freq: 1500
       q: 0.71
   highpass1:
     type: Biquad
@@ -105,7 +119,7 @@ filters:
     type: Biquad
     parameters:
       type: Highpass
-      freq: 3000
+      freq: 1500
       q: 0.71
   eqmidb1:
     type: Biquad
@@ -171,6 +185,7 @@ pipeline:
       - lowpass2
       - lowpass1
       - lowpass2
+      - volumegain
   - type: Filter
     channel: 1 #right bass
     names:
@@ -178,6 +193,7 @@ pipeline:
       - lowpass2
       - lowpass1
       - lowpass2
+      - volumegain
   - type: Filter
     channel: 2 #left midbass
     names:
@@ -188,6 +204,7 @@ pipeline:
       - eqmidb1
       - eqmidb2
       - delaymidbase
+      - volumegain
   - type: Filter
     channel: 3 #right midbass
     names:
@@ -198,6 +215,7 @@ pipeline:
       - eqmidb1
       - eqmidb2
       - delaymidbase
+      - volumegain
   - type: Filter
     channel: 4 #left mids
     names:
@@ -207,6 +225,7 @@ pipeline:
       - lowpass4
       - eqmid
       - delaymid
+      - volumegain
   - type: Filter
     channel: 5 #right mids
     names:
@@ -216,6 +235,7 @@ pipeline:
       - lowpass4
       - eqmid
       - delaymid
+      - volumegain
   - type: Filter
     channel: 6 #left highs
     names:
@@ -224,6 +244,7 @@ pipeline:
       - eqhigh1
       - eqhigh2
       - delayhigh
+      - volumegain
   - type: Filter
     channel: 7 #right highs
     names:
@@ -232,3 +253,4 @@ pipeline:
       - eqhigh1
       - eqhigh2
       - delayhigh
+      - volumegain

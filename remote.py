@@ -53,32 +53,40 @@ class CamillaVolume:
         return volume
 
     def mute(self):
+        self.ws.send(json.dumps({"SetMute": True }))
+        print("mute")
+        return self.ws.recv()
+
+    def unmute(self):
+        self.ws.send(json.dumps({"SetMute": False }))
+        print("unmute")
+        return self.ws.recv()
+
+    def switch_mute(self):
         mute = self.get_mute()
         result = ""
         if mute == False:
-            self.ws.send(json.dumps({"SetMute": True }))
-            print("mute")
-            result = self.ws.recv()
+            result = self.mute()
         elif mute == True:
-            self.ws.send(json.dumps({"SetMute": False }))
-            print("unmute")
-            result = self.ws.recv()
+            result = self.unmute()
         return result
+
+    def set_volume(self, volume):
+        self.ws.send(json.dumps({"SetVolume": volume }))
+        return self.ws.recv()
 
     def increase(self):
         volume = self.get_volume()
         result = ""
         if volume < 0:
-            self.ws.send(json.dumps({"SetVolume": volume + 1 }))
-            result = self.ws.recv()
+            result = self.set_volume(volume + 1)
         return result
 
     def decrease(self):
         volume = self.get_volume()
         result = ""
         if volume > -99:
-            self.ws.send(json.dumps({"SetVolume": volume - 1 }))
-            result = self.ws.recv()
+            result = self.set_volume(volume - 1)
         return result
 
     def keep_alive(self, timeout):
@@ -94,6 +102,7 @@ except serial.SerialException as e:
     sys.exit(1)
 
 remote = CamillaVolume("ws://127.0.0.1:1234")
+remote.set_volume(-12)
 
 while True:
     serial_data = ser.readline().decode('utf-8')
@@ -118,7 +127,7 @@ while True:
             print('{} {} {} not defined'.format(protocol, address, command))
         
         if action == "mute":
-            remote.mute()
+            remote.switch_mute()
         elif action == "increase":
             remote.increase()
         elif action == "decrease":

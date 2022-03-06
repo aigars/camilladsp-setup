@@ -6,7 +6,7 @@ After=camilladsp.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/dkdsp/camilladsp-setup/remote.py
+ExecStart=/usr/bin/python3 /home/dkdsp/camilladsp-setup/remote.py -c /home/dkdsp/camilladsp-setup/remote.json
 Restart=always
 RestartSec=5
 SyslogIdentifier=camilladsp

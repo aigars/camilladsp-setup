@@ -4,7 +4,7 @@ devices:
   chunksize: 1024
   target_level: 1024
   adjust_period: 3
-  enable_rate_adjust: true
+  enable_rate_adjust: false
   enable_resampling: false
   resampler_type:  BalancedAsync
   capture_samplerate: 48000
@@ -218,16 +218,16 @@ filters:
     parameters:
       type: Raw
       format: TEXT
-      filename: firs/impulse_midbass.txt
+      filename: ../firs/impulse_midbass.txt
   fir_mid:
     type: Conv
     parameters:
       type: Raw
       format: TEXT
-      filename: firs/impulse_mid.txt 
+      filename: ../firs/impulse_mid.txt 
   fir_high:
     type: Conv
     parameters:
       type: Raw
       format: TEXT
-      filename: firs/impulse_high_eq.txt
+      filename: ../firs/impulse_high_eq.txt

@@ -5,6 +5,7 @@ import time
 import flask
 from flask import request, jsonify, render_template
 import logging
+from multiprocessing import Process, Value
 
 app = flask.Flask(__name__, static_url_path="")
 # app.config["DEBUG"] = True
@@ -31,10 +32,16 @@ class CamillaConfiguration:
         self.configuration['mixers']['mixer']['mapping'][channel]['mute'] = mute
         self.set_configuration()
 
+    def keep_alive(self, timeout):
+        time_alive = int(time.time()) - self.timestamp
+        if time_alive >= timeout:
+            self.get_configuration()
+            puts("keep alive")
+
 
 @app.route("/", methods=["GET"])
 def get_home():
-    configuration = remote.get_configuration()
+    configuration = conf.get_configuration()
     channel_mapping = configuration['mixers']['mixer']['mapping']
     mixer = []
     for channel in channel_mapping:
@@ -51,11 +58,10 @@ def get_home():
 def set_mute():
     data = request.json
     print(data)
-    remote.set_mute(data["channel"], data["mute"])
+    conf.set_mute(data["channel"], data["mute"])
     data["mute"] = str(not data['mute']).lower()
     return jsonify(data)
 
-
 if __name__ == "__main__":
-    remote = CamillaConfiguration("ws://127.0.0.1:1234")
-    app.run(host='0.0.0.0', port=8080)
+    conf = CamillaConfiguration("ws://127.0.0.1:1234")
+    app.run(host='0.0.0.0', port=8080, threaded=True)

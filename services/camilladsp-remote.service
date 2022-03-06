@@ -9,7 +9,7 @@ Type=simple
 ExecStart=/usr/bin/python3 /home/dkdsp/camilladsp-setup/remote.py -c /home/dkdsp/camilladsp-setup/remote.json
 Restart=always
 RestartSec=5
-SyslogIdentifier=camilladsp
+SyslogIdentifier=camilladsp-remote
 User=root
 Group=root
 

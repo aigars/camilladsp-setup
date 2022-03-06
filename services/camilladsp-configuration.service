@@ -1,0 +1,17 @@
+[Unit]
+Description=CamillaDSP configuration
+StartLimitIntervalSec=0
+PartOf=camilladsp.service
+After=camilladsp.service
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 /home/dkdsp/camilladsp-setup/web/configuration.py
+Restart=always
+RestartSec=5
+SyslogIdentifier=camilladsp-configuration
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<body class="divDefault">
+  <h1>mute</h1>
+
+  {% for channel in mixer %}
+    <div>ch{{ channel["channel"] }}:<button id='mute-button{{ channel["channel"] }}' data-mute=true>mute</button></div>
+  {% endfor %}
+
+  <style>
+    .divDefault {
+      font-size: large;
+      font-family: "Lucida Console", "Courier New", monospace;
+    }
+  </style>
+  <script>
+    {% for channel in mixer %}
+      const mute_button{{ channel["channel"] }} = document.getElementById('mute-button{{ channel["channel"] }}')
+      mute_button{{ channel["channel"] }}.addEventListener('click', function (event) {
+        event.preventDefault();
+        fetch('http://192.168.8.127:8080/mute', {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({'channel': {{ channel["channel"] }}, 'mute': JSON.parse(this.dataset.mute)})})
+        .then((res) => res.json())
+        .then((data) => {
+          console.log(data);
+          if (JSON.parse(data["mute"])) {
+            mute_button{{ channel["channel"] }}.innerHTML = "mute";
+            mute_button{{ channel["channel"] }}.dataset.mute = data["mute"];
+          } else {
+            mute_button{{ channel["channel"] }}.innerHTML = "unmute";
+            mute_button{{ channel["channel"] }}.dataset.mute = data["mute"];
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        })
+      })
+    {% endfor %}
+  </script>
+
+</body>
+</html>

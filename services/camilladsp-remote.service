@@ -2,7 +2,7 @@
 Description=CamillaDSP remote
 StartLimitIntervalSec=0
 PartOf=camilladsp.service
-After=camilladsp.service
+Requires=camilladsp.service
 
 [Service]
 Type=simple

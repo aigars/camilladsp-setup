@@ -5,6 +5,7 @@ After=syslog.target
 
 [Service]
 Type=simple
+ExecStartPre=/home/dkdsp/camilladsp-setup/amixer-set-default.sh
 ExecStart=/usr/local/bin/camilladsp -p1234 /home/dkdsp/camilladsp-setup/configuration/output.yaml
 Restart=always
 RestartSec=5

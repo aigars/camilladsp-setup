@@ -14,12 +14,14 @@ sudo cp services/camilladsp-watcher.service /etc/systemd/system/
 sudo cp services/camilladsp-watcher.path /etc/systemd/system/  
 sudo cp services/camilladsp-remote.service /etc/systemd/system/  
 sudo cp services/camilladsp-configuration.service /etc/systemd/system/  
+sudo cp services/camilladsp-amixer.service /etc/systemd/system/  
 sudo systemctl daemon-reload  
 sudo systemctl enable camilladsp.service  
 sudo systemctl enable camilladsp-watcher.service  
 sudo systemctl enable camilladsp-watcher.path  
 sudo systemctl enable camilladsp-remote.service  
 sudo systemctl enable camilladsp-configuration.service
+sudo systemctl enable camilladsp-amixer.service
 
 
 ## Get alsa device info
@@ -30,3 +32,12 @@ sudo amixer -c0 cget iface=MIXER,name='Internal Clock'
 sudo amixer -c0 cset iface=MIXER,name='Internal Clock' 2
 sudo amixer -c0 cget iface=MIXER,name='System Sample Rate' 
 sudo amixer -c0 cset iface=MIXER,name='System Sample Rate' 44100
+
+## Set clock parameters
+sudo amixer -c0 cset iface=MIXER,name='Preferred Sync Reference' 0
+sudo amixer -c1 cset iface=MIXER,name='Preferred Sync Reference' 9
+sudo amixer -c2 cset iface=MIXER,name='Preferred Sync Reference' 9
+
+sudo amixer -c0 cset iface=MIXER,name='System Clock Mode' 0
+sudo amixer -c1 cset iface=MIXER,name='System Clock Mode' 1
+sudo amixer -c2 cset iface=MIXER,name='System Clock Mode' 1

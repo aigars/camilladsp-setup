@@ -36,7 +36,7 @@ class CamillaConfiguration:
         time_alive = int(time.time()) - self.timestamp
         if time_alive >= timeout:
             self.get_configuration()
-            puts("keep alive")
+            print("keep alive")
 
 
 @app.route("/", methods=["GET"])

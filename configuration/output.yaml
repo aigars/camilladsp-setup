@@ -2,11 +2,9 @@
 devices:
   samplerate: 48000
   chunksize: 1024
-  target_level: 1024
-  adjust_period: 3
   enable_rate_adjust: false
   enable_resampling: false
-  resampler_type:  BalancedAsync
+  resampler_type: AccurateAsync
   capture_samplerate: 48000
   capture:
     type: Alsa
@@ -15,15 +13,15 @@ devices:
     format: S32LE
   playback:
     type: Alsa
-    channels: 48
-    device: "output_cards"
+    channels: 8
+    device: "output_card1"
     format: S32LE
      
 mixers:
   mixer:
     channels:
       in: 2
-      out: 48
+      out: 8
     mapping:
       - dest: 0
         mute: false
@@ -69,108 +67,6 @@ mixers:
             gain: -10
             inverted: false
       - dest: 7
-        mute: false
-        sources:
-          - channel: 1
-            gain: -11
-            inverted: false
-
-
-      - dest: 8
-        mute: false
-        sources:
-          - channel: 0
-            gain: -9
-            inverted: false
-      - dest: 9
-        mute: false
-        sources:
-          - channel: 0
-            gain: -7
-            inverted: false
-      - dest: 10
-        mute: false
-        sources:
-          - channel: 0
-            gain: -10
-            inverted: false
-      - dest: 11
-        mute: false
-        sources:
-          - channel: 0
-            gain: -11
-            inverted: false
-
-      - dest: 12
-        mute: false
-        sources:
-          - channel: 1
-            gain: -9
-            inverted: false
-      - dest: 13
-        mute: false
-        sources:
-          - channel: 1
-            gain: -7
-            inverted: false
-      - dest: 14
-        mute: false
-        sources:
-          - channel: 1
-            gain: -10
-            inverted: false
-      - dest: 15
-        mute: false
-        sources:
-          - channel: 1
-            gain: -11
-            inverted: false
-
-
-      - dest: 16
-        mute: false
-        sources:
-          - channel: 0
-            gain: -9
-            inverted: false
-      - dest: 17
-        mute: false
-        sources:
-          - channel: 0
-            gain: -7
-            inverted: false
-      - dest: 18
-        mute: false
-        sources:
-          - channel: 0
-            gain: -10
-            inverted: false
-      - dest: 19
-        mute: false
-        sources:
-          - channel: 0
-            gain: -11
-            inverted: false
-
-      - dest: 20
-        mute: false
-        sources:
-          - channel: 1
-            gain: -9
-            inverted: false
-      - dest: 21
-        mute: false
-        sources:
-          - channel: 1
-            gain: -7
-            inverted: false
-      - dest: 22
-        mute: false
-        sources:
-          - channel: 1
-            gain: -10
-            inverted: false
-      - dest: 23
         mute: false
         sources:
           - channel: 1
@@ -232,124 +128,6 @@ pipeline:
       - volume
   - type: Filter
     channel: 7 #right highs
-    names:
-      - fir_high
-      - delay_high
-      - volumegain
-      - volume
-
-
-  - type: Filter
-    channel: 8 #left bass
-    names:
-      - lowpass_bass
-      - delay_bass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 9 #left midbass
-    names:
-      - fir_midbass
-      - delay_midbass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 10 #left mids
-    names:
-      - fir_mid
-      - delay_mid
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 11 #left highs
-    names:
-      - fir_high
-      - delay_high
-      - volumegain
-      - volume
-
-  - type: Filter
-    channel: 12 #right bass
-    names:
-      - lowpass_bass
-      - delay_bass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 13 #right midbass
-    names:
-      - fir_midbass
-      - delay_midbass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 14 #right mids
-    names:
-      - fir_mid
-      - delay_mid
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 15 #right highs
-    names:
-      - fir_high
-      - delay_high
-      - volumegain
-      - volume
-
-
-  - type: Filter
-    channel: 16 #left bass
-    names:
-      - lowpass_bass
-      - delay_bass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 17 #left midbass
-    names:
-      - fir_midbass
-      - delay_midbass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 18 #left mids
-    names:
-      - fir_mid
-      - delay_mid
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 19 #left highs
-    names:
-      - fir_high
-      - delay_high
-      - volumegain
-      - volume
-
-  - type: Filter
-    channel: 20 #right bass
-    names:
-      - lowpass_bass
-      - delay_bass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 21 #right midbass
-    names:
-      - fir_midbass
-      - delay_midbass
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 22 #right mids
-    names:
-      - fir_mid
-      - delay_mid
-      - volumegain
-      - volume
-  - type: Filter
-    channel: 23 #right highs
     names:
       - fir_high
       - delay_high
@@ -442,4 +220,4 @@ filters:
     parameters:
       type: Raw
       format: TEXT
-      filename: ../firs/impulse_high_eq.txt
+      filename: ../firs/impulse_high_eq_new.txt

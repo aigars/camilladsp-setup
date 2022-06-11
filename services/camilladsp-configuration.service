@@ -6,7 +6,7 @@ Requires=camilladsp.service
 
 [Service]
 Type=simple
-ExecStart=/usr/bin/python3 /home/dsp-user/configuration.py
+ExecStart=/usr/bin/python3 /home/dsp-user/web/configuration.py
 Restart=always
 RestartSec=5
 SyslogIdentifier=camilladsp-configuration

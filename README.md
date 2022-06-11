@@ -6,7 +6,7 @@ cargo build --release
 sudo cargo install --path .
 
 ## Install scripts
-sudo cp web/configuration.py /home/dsp-user/
+cp -r web /home/dsp-user/
 
 ## Setup systemd service
 sudo cp services/camilladsp.service /etc/systemd/system/  

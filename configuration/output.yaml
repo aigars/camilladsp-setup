@@ -8,19 +8,19 @@ devices:
   capture_samplerate: 48000
   capture:
     type: Alsa
-    channels: 2
-    device: "input_card1"
+    channels: 8
+    device: "hw:CARD=DAC8PRO"
     format: S32LE
   playback:
     type: Alsa
     channels: 8
-    device: "output_card1"
+    device: "hw:CARD=DAC8PRO"
     format: S32LE
      
 mixers:
   mixer:
     channels:
-      in: 2
+      in: 8
       out: 8
     mapping:
       - dest: 0

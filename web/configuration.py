@@ -1,7 +1,7 @@
-import sys
-import websocket
-import json
 import time
+import json
+import psutil
+import websocket
 import flask
 from flask import request, jsonify, render_template
 import logging
@@ -87,13 +87,20 @@ def get_home():
     res = render_template('mute_template.html', mixer=mixer)
     return res
 
-@app.route("/mute/", methods=["POST"])
+@app.route("/mute", methods=["POST"])
 def set_mute():
     data = request.json
     print(data)
     conf.set_mute(data["channel"], data["mute"])
     data["mute"] = str(not data['mute']).lower()
-    return jsonify(data)  
+    return jsonify(data)
+
+@app.route("/cpu", methods=["GET"])
+def get_cpu_percent():
+    data = {
+        "percent": psutil.cpu_percent()
+    }
+    return jsonify(data)
 
 if __name__ == "__main__":
     conf = CamillaConfiguration("ws://127.0.0.1:1234", "/home/dsp-user/web/configuration.json")

@@ -3,7 +3,7 @@
 <body class="divDefault">
   <h1>mute</h1>
   {% for channel in mixer %}
-    <div>ch{{ channel["channel"] }}:<button id='mute-button{{ channel["channel"] }}' data-mute=true>mute</button></div>
+    <div>ch{{ channel["channel"] }}:<button id='mute-button{{ channel["channel"] }}' data-mute={{ channel["mute"] }}>{% if channel["mute"] == "true" %}mute{% else %}unmute{% endif %}</button></div>
   {% endfor %}
   <style>
     .divDefault {

@@ -5,8 +5,6 @@ import websocket
 import json
 import time
 
-#stty -F /dev/ttyACM0 cs8 115200 -ignbrk -brkint -imaxbel -opost -onlcr -isig -icanon -iexten -echo -echoe -echok -echoctl -echoke noflsh -ixon -crtscts
-
 SERIALPORT = "/dev/ttyACM0"
 ser = serial.serial_for_url(SERIALPORT, timeout=1, do_not_open=True)
 ser.baudrate = 115200

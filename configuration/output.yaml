@@ -2,26 +2,28 @@
 devices:
   samplerate: 48000
   chunksize: 1024
+  target_level: 1024
+  adjust_period: 3
   enable_rate_adjust: false
   enable_resampling: false
   resampler_type: AccurateAsync
   capture_samplerate: 48000
   capture:
     type: Alsa
-    channels: 2
+    channels: 16
     device: "input_card1"
     format: S32LE
   playback:
     type: Alsa
-    channels: 8
-    device: "output_card1"
+    channels: 48
+    device: "output_cards"
     format: S32LE
      
 mixers:
   mixer:
     channels:
-      in: 2
-      out: 8
+      in: 16
+      out: 48
     mapping:
       - dest: 0
         mute: false
@@ -220,4 +222,4 @@ filters:
     parameters:
       type: Raw
       format: TEXT
-      filename: ../firs/impulse_high_eq_new.txt
+      filename: ../firs/impulse_high.txt

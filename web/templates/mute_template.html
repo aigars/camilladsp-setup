@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <body class="divDefault">
-  <h1>mute</h1>
+  <h1>DSP Cinema 48ch</h1>
+  <div>CPU: <span id="cpu-percent"></span></div>
+  <br>
   {% for channel in mixer %}
-    <div>ch{{ channel["channel"] }}:<button id='mute-button{{ channel["channel"] }}' data-mute=true>mute</button></div>
+    <div>ch{{ channel["channel"] }}:<button id='mute-button{{ channel["channel"] }}' data-mute={{ channel["mute"] }}>{% if channel["mute"] == "true" %}mute{% else %}unmute{% endif %}</button></div>
   {% endfor %}
   <style>
     .divDefault {
@@ -33,6 +35,20 @@
         })
       })
     {% endfor %}
+  </script>
+  <script>
+    function getCpuPercent() {
+      fetch('/cpu').then(response => response.json()).then(cpu => {
+        showCpuPercent(cpu.percent)
+      })
+      .catch(error => {
+        showCpuPercent("error")
+      })
+    }
+    function showCpuPercent(data) {
+      document.getElementById("cpu-percent").innerHTML = data
+    }
+    setInterval(getCpuPercent, 1000)
   </script>
 
 </body>

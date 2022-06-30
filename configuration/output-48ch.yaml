@@ -1,0 +1,594 @@
+---
+devices:
+  samplerate: 48000
+  chunksize: 1024
+  target_level: 1024
+  adjust_period: 3
+  enable_rate_adjust: false
+  enable_resampling: false
+  resampler_type: AccurateAsync
+  capture_samplerate: 48000
+  capture:
+    type: Alsa
+    channels: 16
+    device: "input_card1"
+    format: S32LE
+  playback:
+    type: Alsa
+    channels: 48
+    device: "output_cards"
+    format: S32LE
+
+
+
+mixers:
+  mixer:
+    channels:
+      in: 16
+      out: 48
+    mapping:
+# left side
+      # card 1.1
+      - dest: 0
+        mute: false
+        sources:
+          - channel: 0
+            gain: 0
+            inverted: false
+      - dest: 1
+        mute: false
+        sources:
+          - channel: 0
+            gain: 0
+            inverted: false
+      - dest: 2
+        mute: false
+        sources:
+          - channel: 2
+            gain: 0
+            inverted: false
+      - dest: 3
+        mute: false
+        sources:
+          - channel: 2
+            gain: 0
+            inverted: false
+      - dest: 4
+        mute: false
+        sources:
+          - channel: 4
+            gain: 0
+            inverted: false
+      - dest: 5
+        mute: false
+        sources:
+          - channel: 4
+            gain: 0
+            inverted: false
+      - dest: 6
+        mute: false
+        sources:
+          - channel: 6
+            gain: 0
+            inverted: false
+      - dest: 7
+        mute: false
+        sources:
+          - channel: 6
+            gain: 0
+            inverted: false
+      # card 1.2
+      - dest: 8
+        mute: false
+        sources:
+          - channel: 8
+            gain: 0
+            inverted: false
+      - dest: 9
+        mute: false
+        sources:
+          - channel: 8
+            gain: 0
+            inverted: false
+      - dest: 10
+        mute: false
+        sources:
+          - channel: 10
+            gain: 0
+            inverted: false
+      - dest: 11
+        mute: false
+        sources:
+          - channel: 10
+            gain: 0
+            inverted: false
+      - dest: 12
+        mute: false
+        sources:
+          - channel: 10
+            gain: 0
+            inverted: false
+      - dest: 13
+        mute: false
+        sources:
+          - channel: 10
+            gain: 0
+            inverted: false
+      - dest: 14
+        mute: false
+        sources:
+          - channel: 14
+            gain: 0
+            inverted: false
+      - dest: 15
+        mute: false
+        sources:
+          - channel: 14
+            gain: 0
+            inverted: false
+      # card 2.1
+      - dest: 16
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+      - dest: 17
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+      - dest: 18
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+      - dest: 19
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+      - dest: 20
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+      - dest: 21
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+      - dest: 22
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+      - dest: 23
+        mute: false
+        sources:
+          - channel: 12
+            gain: 0
+            inverted: false
+
+# right side
+      # card 2.2
+      - dest: 24
+        mute: false
+        sources:
+          - channel: 1
+            gain: 0
+            inverted: false
+      - dest: 25
+        mute: false
+        sources:
+          - channel: 1
+            gain: 0
+            inverted: false
+      - dest: 26
+        mute: false
+        sources:
+          - channel: 3
+            gain: 0
+            inverted: false
+      - dest: 27
+        mute: false
+        sources:
+          - channel: 3
+            gain: 0
+            inverted: false
+      - dest: 28
+        mute: false
+        sources:
+          - channel: 5
+            gain: 0
+            inverted: false
+      - dest: 29
+        mute: false
+        sources:
+          - channel: 5
+            gain: 0
+            inverted: false
+      - dest: 30
+        mute: false
+        sources:
+          - channel: 7
+            gain: 0
+            inverted: false
+      - dest: 31
+        mute: false
+        sources:
+          - channel: 7
+            gain: 0
+            inverted: false
+      # card 3.1
+      - dest: 32
+        mute: false
+        sources:
+          - channel: 9
+            gain: 0
+            inverted: false
+      - dest: 33
+        mute: false
+        sources:
+          - channel: 9
+            gain: 0
+            inverted: false
+      - dest: 34
+        mute: false
+        sources:
+          - channel: 11
+            gain: 0
+            inverted: false
+      - dest: 35
+        mute: false
+        sources:
+          - channel: 11
+            gain: 0
+            inverted: false
+      - dest: 36
+        mute: false
+        sources:
+          - channel: 11
+            gain: 0
+            inverted: false
+      - dest: 37
+        mute: false
+        sources:
+          - channel: 11
+            gain: 0
+            inverted: false
+      - dest: 38
+        mute: false
+        sources:
+          - channel: 15
+            gain: 0
+            inverted: false
+      - dest: 39
+        mute: false
+        sources:
+          - channel: 15
+            gain: 0
+            inverted: false
+      # card 3.2
+      - dest: 40
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+      - dest: 41
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+      - dest: 42
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+      - dest: 43
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+      - dest: 44
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+      - dest: 45
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+      - dest: 46
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+      - dest: 47
+        mute: false
+        sources:
+          - channel: 13
+            gain: 0
+            inverted: false
+
+
+
+pipeline:
+  - type: Mixer
+    name: mixer
+  # card 1.1
+  - type: Filter
+    channel: 0
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 1
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 2
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 3
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 4
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 5
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 6
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 7
+    names:
+      - volumegain
+      - volume
+  # card 1.2
+  - type: Filter
+    channel: 8
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 9
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 10
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 11
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 12
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 13
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 14
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 15
+    names:
+      - volumegain
+      - volume
+
+  # card 2.1
+  - type: Filter
+    channel: 16
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 17
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 18
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 19
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 20
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 21
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 22
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 23
+    names:
+      - volumegain
+      - volume
+  # card 2.2
+  - type: Filter
+    channel: 24
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 25
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 26
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 27
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 28
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 29
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 30
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 31
+    names:
+      - volumegain
+      - volume
+
+  # card 3.1
+  - type: Filter
+    channel: 32
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 33
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 34
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 35
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 36
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 37
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 38
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 39
+    names:
+      - volumegain
+      - volume
+  # card 3.2
+  - type: Filter
+    channel: 40
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 41
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 42
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 43
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 44
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 45
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 46
+    names:
+      - volumegain
+      - volume
+  - type: Filter
+    channel: 47
+    names:
+      - volumegain
+      - volume
+
+
+
+filters:
+  volumegain:
+    type: Gain
+    parameters:
+      gain: -24.0
+      inverted: false
+      mute: false
+  volume:
+    type: Volume
+    parameters:
+      ramp_time: 200

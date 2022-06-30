@@ -6,7 +6,7 @@ Requires=camilladsp.service
 
 [Service]
 Type=oneshot
-ExecStart=/usr/bin/bash /home/dkdsp/camilladsp-setup/amixer-set-autosync.sh
+ExecStart=/usr/bin/bash /home/dsp-user/scripts/amixer-set-autosync.sh
 SyslogIdentifier=camilladsp-amixer
 RemainAfterExit=yes
 User=root
